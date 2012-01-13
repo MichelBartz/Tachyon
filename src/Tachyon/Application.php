@@ -92,12 +92,6 @@ namespace Tachyon
 		 * Execute the request (It deserved it)
 		 */
 		public function run() {
-			if(!$this->_tplDir) {
-				throw new ApplicationException("No template directory has been set");
-			}
-			if(!$this->_controllerDir) {
-				throw new ApplicationException("No controller directy has been set");
-			}
 			$found = false;
 			$uri = strtok($_SERVER['REQUEST_URI'], "?");
 
@@ -109,6 +103,9 @@ namespace Tachyon
 					if(!is_callable($route)) {
 						$method = strtolower($_SERVER['REQUEST_METHOD']);
 
+						if(!$this->_controllerDir) {
+							throw new ApplicationException("No controller directory has been set.");
+						}
 						include $this->_controllerDir . str_replace("\\","/",$route) . ".php";
 
 						$controller = new $route($this->_tplDir);
