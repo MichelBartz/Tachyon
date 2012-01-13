@@ -1,14 +1,28 @@
-Tachyon is a micro framework for PHP5.3 . The goal is to keep the PHP layer as small as possible, and make the development of PHP based websites as easy as possible.
+# Tachyon framework for PHP5.3+
 
-ToDo
-====
-Finish Unit Test.
+Tachyon is a PHP micro framework inspired by [web.py](http://webpy.org) released under the MIT public license.
 
-Requirement
-===========
-PHP 5.3+
+## Features
 
-Getting Started
-===============
+Tachyon provides just the necessary tools for creating websites in PHP :
 
-Take a look inside examples/SimpleSite . You will find a basic site built with Tachyon. 
+* Route handling RegEx style
+* Parameters in URI
+* Closure as Handler
+* Class as Handler
+* An optional Handler abstract
+* HTTP Caching
+* PHP 5.3+
+
+## "Hello World" (PHP >= 5.3)
+
+If you are familiar with web.py, this will look like home.
+
+    require "Tachyon/Application.php"
+
+	$urls = array("/(.*)" => function() {
+							     echo "Hello World!";
+		                     });
+
+	$app = new \Tachyon\Application($urls);
+	$app->run();
