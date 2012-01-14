@@ -1,6 +1,6 @@
 # Tachyon framework for PHP5.3+
 
-Tachyon is a PHP micro framework inspired by [web.py](http://webpy.org) released under the MIT public license.
+Tachyon is a PHP micro framework inspired by [web.py](http://webpy.org) and by the the [MicroPHP](http://microphp.org/) initiative released under the MIT public license.
 
 ## Features
 
