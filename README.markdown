@@ -14,6 +14,11 @@ Tachyon provides just the necessary tools for creating websites in PHP :
 * HTTP Caching (ToDo)
 * PHP 5.3+
 
+## Requirements
+
+* PHP 5.3>=
+* PHPUnit (If you want to run the tests)
+
 ## "Hello World" (PHP >= 5.3)
 
 If you are familiar with web.py, this will look like home.
