@@ -41,18 +41,19 @@ namespace Tachyon
 	{
 		private $_tplDir;
 		private $_controllerDir;
-		private $_urls = array();
 		private $_routes = array();
+		private $_router;
 
 		/**
 		 * Constructor
-		 * @param array $urls The defined routes
+		 * @param array $routes The defined routes
 		 */
-		public function __construct(array $urls) {
-			$this->_urls = $urls;
-			$this->_routes = array_keys($urls);
+		public function __construct(array $routes) {
+			$this->_routes = $routes;
 
 			spl_autoload_register(array($this, "autoload"));
+
+			$this->_router = new Router($this->_routes);
 		}
 		/**
 		 * Autoload for SPL. Think about putting your libraries and controller folder
@@ -92,31 +93,22 @@ namespace Tachyon
 		 * Execute the request (It deserved it)
 		 */
 		public function run() {
-			$found = false;
-			$uri = strtok($_SERVER['REQUEST_URI'], "?");
-
-			foreach($this->_routes as $pattern) {
-				$cleanPattern = str_replace("/","\/",$pattern);
-				if(preg_match("/^" . $cleanPattern . "$/", $uri)) {
-					$found = true;
-					$route = $this->_urls[$pattern];
-					if(!is_callable($route)) {
-						$method = strtolower($_SERVER['REQUEST_METHOD']);
-
-						if(!$this->_controllerDir) {
-							throw new ApplicationException("No controller directory has been set.");
-						}
-						include $this->_controllerDir . str_replace("\\","/",$route) . ".php";
-
-						$controller = new $route($this->_tplDir);
-						$controller->$method();
-					} else {
-						$route();
+			if(!$this->_router->notFound) {	
+				$controller = $this->_router->getController();
+				if(!is_callable($controller)) {
+					if(!$this->_controllerDir) {
+						throw new ApplicationException("No controller directory has been set.");
 					}
-				} 
-			}
+					$method = $this->_router->getMethod();
+					include $this->_controllerDir . str_replace("\\","/", $controller) . ".php";
 
-			if(!$found) {
+					$ctrl = new $controller($this->_tplDir);
+					$ctrl->setParams($this->_router->getParams())
+						 ->$method();
+				} else {
+					call_user_func_array($controller, $this->_router->getParams());
+				}
+			} else {
 				header("HTTP/1.0 404 Not Found");
 			}
 		}

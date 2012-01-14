@@ -1,4 +1,16 @@
 <?php
+/**
+ * T A C H Y O N
+ *
+ * A Php Micro framework inspired by web.py {@link:http://webpy.org}
+ *
+ * For more informations: {@link:http://github.com/mikushi/tachyon}
+ *
+ * @author Michel Bartz
+ * @copyright Copyright (c) 2012 Michel Bartz
+ * @license http://opensource.org/licenses/mit-license.php The MIT License
+ */
+
 #   -----------------------------------------------------------------------    #
 #    Copyright (c) 2012 Michel Bartz                                           #
 #                                                                              #
@@ -25,60 +37,71 @@
 # ============================================================================ # 
 namespace Tachyon
 {
-	abstract class Controller
+	class Router
 	{
-		private $_tplDir;
+		private $_routes = array();
+		private $_request;
+		private $_controller;
+		private $_method;
 		private $_params = array();
 		/**
+		 * If the request as been found
+		 */
+		public $notFound;
+		/**
 		 * Constructor
-		 * If overloaded, make sure to forward the $tplDir
-		 * @param String $tplDir The template directory
+		 * @param array $routes The routes to match URI against
 		 */
-		public function __construct($tplDir) {
-			$this->_tplDir = $tplDir;	
+		public function __construct(array $routes) {
+			$this->_routes = $routes;
+			$this->_request = strtok($_SERVER['REQUEST_URI'], "?");
+			$this->notFound = !$this->_route();
 		}
 		/**
-		 * Set the URI Submitted parameters for Controller/template access
-		 * @return \Tachyon\Controller
-		 */
-		public function setParams(array $params) {
-			$this->_params = $params;
-			return $this;
-		}
-		/**
-		 * Return User submitted data (Query String, Post Data, Cookies)
-		 * @param String $entry The name of the data
-		 * @param mixed $default A default value for the data, used if data entry is non existent
+		 * Return the controller to instanciate or the Closure to execute
 		 * @return mixed
 		 */
-		public function getData($entry, $default = null) {
-			if(isset($this->_params[$entry])) {
-				return $this->_params[$entry];
-			} elseif(isset($_POST[$entry])) {
-				return $_POST[$entry];
-			} elseif(isset($_GET[$entry])) {
-				return $_GET[$entry];
-			} elseif(isset($_COOKIE[$entry])) {
-				return $_COOKIE[$entry];
+		public function getController() {
+			return $this->_controller;
+		}
+		/**
+		 * Return the method to call (get, post, delete, head, ...)
+		 * @return String
+		 */
+		public function getMethod() {
+			return $this->_method;
+		}
+		/**
+		 * Return the User submitted parameters through URI
+		 * @return array
+		 */
+		public function getParams() {
+			return $this->_params;
+		}
+		/**
+		 *
+		 * I N T E R N A L   L O G I C
+		 */
+		private function _route() {
+			foreach($this->_routes as $pattern=>$route) {
+				preg_match_all("@:([\w]+)@", $pattern, $paramNames, PREG_PATTERN_ORDER);
+				$paramNames = $paramNames[0]; 
+
+				$regex = preg_replace("@:[\w]+@","([a-zA-Z0-9_\+\-%]+)", $pattern);
+				$regex .= "/?";
+
+				if(preg_match_all("@^" . $regex . "$@", $this->_request, $values)) {
+					array_shift($values);
+					foreach($paramNames as $key=>$value) {
+						$this->_params[substr($value, 1)] = urldecode($values[0][$key]);
+					}
+
+					$this->_controller = $route;
+					$this->_method = strtolower($_SERVER['REQUEST_METHOD']);
+					return true;
+				}
 			}
-			return $default;
-		}
-		/**
-		 * Simple wrapper for redirection
-		 * @param String $url The url to redirect to
-		 * @param int $code The HTTP Code to use. Default: 301
-		 */
-		public function redirect($url, $code = 301) {
-			header("Location: $url", true, $code);
-		}
-		/**
-		 * Simple proxy function to include.
-		 * Just for more readable controller code
-		 * @param String $tpl Path to the template. It is better to add the view folder to include paths
-		 * @return void
-		 */
-		public function render($tpl) {
-			include $this->_tplDir . $tpl;
+			return false;
 		}
 	}
 }
