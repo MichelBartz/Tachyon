@@ -9,7 +9,7 @@ require_once "Tachyon/Application.php";
 $urls = array("/" => function() {
 					      echo "Index";
 						 },
-			  "/home"=> "Home"
+			  "/home/:name"=> "Home"
 			);
 
 $app = new \Tachyon\Application($urls);
