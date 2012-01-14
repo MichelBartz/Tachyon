@@ -7,7 +7,7 @@ Tachyon is a PHP micro framework inspired by [web.py](http://webpy.org) released
 Tachyon provides just the necessary tools for creating websites in PHP :
 
 * Route handling RegEx style
-* Parameters in URI (ToDo)
+* Parameters in URI
 * Closure as Controller
 * Class as Controller
 * An optional Controller abstract
