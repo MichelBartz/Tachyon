@@ -10,7 +10,8 @@ $urls = array(
 	"/home" => "Home",
 	"/user/:name" => function($name) {
 		echo $name;
-	}
+	},
+	"404" => "NotFound"
 );
 
 $app = new \Tachyon\Application($urls);
