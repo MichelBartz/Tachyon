@@ -109,6 +109,20 @@ namespace Tachyon
 					call_user_func_array($controller, $this->_router->getParams());
 				}
 			} else {
+				$this->_404();	
+			}
+		}
+
+		private function _404() {
+			if(isset($this->_routes['404'])) {
+				$controller = $this->_routes['404'];
+				if(!is_callable($controller)) {
+					$ctrl = new $controller($this->_tplDir);
+					$ctrl->get();
+				} else {
+					$controller();
+				}
+			} else {
 				header("HTTP/1.0 404 Not Found");
 			}
 		}
