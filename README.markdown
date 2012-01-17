@@ -13,6 +13,7 @@ Tachyon provides just the necessary tools for creating websites in PHP :
 * An optional Controller abstract
 * HTTP Caching (ToDo)
 * PHP 5.3+
+* 404 Handler
 
 ## Requirements
 
