@@ -6,8 +6,8 @@ set_include_path(
 
 require_once "Tachyon/Application.php";
 
-$urls = array("/" => function() {
-					      echo "Index";
+$urls = array("/:test" => function($test) {
+					      echo $test;
 						 },
 			  "/home/:name"=> "Home"
 			);
