@@ -1,5 +1,6 @@
 <?php
 include "../src/Tachyon/Application.php";
+include "../src/Tachyon/Router.php";
 class ApplicationTest extends PHPUnit_Framework_TestCase
 {
 	/**
@@ -7,6 +8,7 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testRun($uri) {
 		$_SERVER['REQUEST_URI'] = $uri;
+		$_SERVER['REQUEST_METHOD'] = "GET";
 		$urls = array("/(.*)" => function() {
 									echo 1;
 								 });
