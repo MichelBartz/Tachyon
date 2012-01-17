@@ -9,7 +9,10 @@ require_once "Tachyon/Application.php";
 $urls = array("/:test" => function($test) {
 					      echo $test;
 						 },
-			  "/home/:name"=> "Home"
+			  "/home/:name"=> "Home",
+			  "404" => function() {
+							echo "Page not found, sad story :'(";
+			  		   }
 			);
 
 $app = new \Tachyon\Application($urls);
