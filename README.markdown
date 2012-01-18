@@ -11,8 +11,10 @@ Tachyon provides just the necessary tools for creating websites in PHP :
 * Closure as Controller
 * Class as Controller
 * An optional Controller abstract
+* HTTP Caching easiness.
+* HTTP Header control.
 * PHP 5.3+
-* 404 Handler
+* 404 Handler.
 
 ## Requirements
 
