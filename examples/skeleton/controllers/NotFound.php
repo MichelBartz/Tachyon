@@ -2,6 +2,7 @@
 class NotFound extends \Tachyon\Controller
 {
 	public function get() {
-		echo "Page not found";
+		$this->response->append("Page not found");
+		$this->sendResponse(404);		
 	}
 }	
