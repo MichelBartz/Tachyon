@@ -85,13 +85,54 @@ namespace Tachyon
 			504 => '504 Gateway Timeout',
 			505 => '505 HTTP Version Not Supported'
 		);
+	
+		/**
+		 * Cache-Control cacheability directives
+		 */
+		const CC_PUBLIC = "public";
+		const CC_PRIVATE = "private";
+		const CC_NOCACHE = "no-cache";
 
 		private $_headers = array();
 		private $_body;
 		private $_length = 0;
+		private $_isCachable;
+		private $_maxAge = 300;
+		private $_cacheability = self::CC_PUBLIC;
 
-		public function __construct() {
+		public function __construct($cache = false) {
 			$this->_headers['Content-Type'] = "text/html";
+			$this->_isCachable = $cache;
+		}
+		/**
+		 * Sets the Cacheability of the response (if Cachable=true)
+		 * @param string $cacheability The cacheability of the response (public, private or no-cache)
+		 * @return \Tachyon\Response
+		 */
+		public function setCacheability($cacheability) {
+			$this->_cacheability = $cacheability;
+			return $this;
+		}
+		/**
+		 * Weither or not the response will be cached
+		 * @param bool $value 
+		 * @return \Tachyon\Response
+		 */
+		public function setCachable($value) {
+			$this->_isCachable = $value;
+			return $this;
+		}
+		/**
+		 * Sets the max-age directive for Cache-Control
+		 * @param int $maxAge The max-age delta to use, in seconds.
+		 * @return \Tachyon\Response
+		 */
+		public function setMaxAge($maxAge) {
+			if(is_numeric($maxAge)) {
+				$this->_maxAge = $maxAge;
+				return $this;
+			}
+			throw new ResponseException("$maxAge is not a valid max-age value. max-age must be numeric");
 		}
 		/**
 		 * Sets a header directive
@@ -139,6 +180,9 @@ namespace Tachyon
 
 			foreach($this->_headers as $key=>$value) {
 				header($key . ": " . $value);
+			}
+			if($this->isCachable) {
+				header("Cache-Control: ". $this->_cacheability . ",max-age=" . $this->_maxAge);
 			}
 			echo $this->_body;
 		}

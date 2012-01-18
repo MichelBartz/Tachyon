@@ -35,6 +35,19 @@ namespace Tachyon
 {
 	abstract class Controller
 	{
+		/**
+		 * @param bool $isCacheable Weither or not we should cache the response
+		 */
+		public $isCacheable = false;
+		/**
+		 * @param int $maxAge The max-age delta to use for the Cache-Control directive
+		 */
+		public $maxAge = 300;
+		/**
+		 * @param String $cacheability The cacheability of the response (public, private or no-cache)
+		 */
+		public $cacheability;
+
 		private $_tplDir;
 		private $_params = array();
 		/**
@@ -48,7 +61,14 @@ namespace Tachyon
 		 */
 		public function __construct($tplDir) {
 			$this->_tplDir = $tplDir;	
-			$this->response = new Response();
+
+			$this->response = new Response($this->isCacheable);
+			if($this->isCacheable) {
+				$this->response->setMaxAge($this->maxAge);
+				if(!is_null($this->cacheability)) {
+					$this->response->setCacheability($this->cacheability);
+				}
+			}
 		}
 		/**
 		 * Set the URI Submitted parameters for Controller/template access
