@@ -1,4 +1,5 @@
 <?php
+include "../src/Tachyon/Response.php";
 include "../src/Tachyon/Controller.php";
 class ControllerTest extends PHPUnit_Framework_TestCase
 {
@@ -19,6 +20,4 @@ class ControllerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(true, $stub->getData("test"));
 		$this->assertEquals(null, $stub->getData("fail"));
 	}
-
-
 }
