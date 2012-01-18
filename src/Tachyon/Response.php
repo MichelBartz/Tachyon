@@ -96,13 +96,13 @@ namespace Tachyon
 		private $_headers = array();
 		private $_body;
 		private $_length = 0;
-		private $_isCachable;
+		private $_isCacheable;
 		private $_maxAge = 300;
 		private $_cacheability = self::CC_PUBLIC;
 
 		public function __construct($cache = false) {
 			$this->_headers['Content-Type'] = "text/html";
-			$this->_isCachable = $cache;
+			$this->_isCacheable = $cache;
 		}
 		/**
 		 * Sets the Cacheability of the response (if Cachable=true)
@@ -118,8 +118,8 @@ namespace Tachyon
 		 * @param bool $value 
 		 * @return \Tachyon\Response
 		 */
-		public function setCachable($value) {
-			$this->_isCachable = $value;
+		public function setCacheable($value) {
+			$this->_isCacheable = $value;
 			return $this;
 		}
 		/**
@@ -181,7 +181,7 @@ namespace Tachyon
 			foreach($this->_headers as $key=>$value) {
 				header($key . ": " . $value);
 			}
-			if($this->isCachable) {
+			if($this->_isCacheable) {
 				header("Cache-Control: ". $this->_cacheability . ",max-age=" . $this->_maxAge);
 			}
 			echo $this->_body;
