@@ -1,4 +1,12 @@
 <?php
+/**
+ * Controller
+ *
+ * @package Tachyon
+ * @author Michel Bartz
+ * @copyright Copyright (c) 2012 Michel Bartz
+ * @license http://opensource.org/licenses/mit-license.php The MIT License
+ */
 #   -----------------------------------------------------------------------    #
 #    Copyright (c) 2012 Michel Bartz                                           #
 #                                                                              #
@@ -30,12 +38,17 @@ namespace Tachyon
 		private $_tplDir;
 		private $_params = array();
 		/**
+		 * @param \Tachyon\Response The HTTP Response Object
+		 */
+		public $response;
+		/**
 		 * Constructor
 		 * If overloaded, make sure to forward the $tplDir
 		 * @param String $tplDir The template directory
 		 */
 		public function __construct($tplDir) {
 			$this->_tplDir = $tplDir;	
+			$this->response = new Response();
 		}
 		/**
 		 * Set the URI Submitted parameters for Controller/template access
@@ -72,13 +85,24 @@ namespace Tachyon
 			header("Location: $url", true, $code);
 		}
 		/**
-		 * Simple proxy function to include.
-		 * Just for more readable controller code
+		 * Renders the template and append the content to the HTTP Response
 		 * @param String $tpl Path to the template. It is better to add the view folder to include paths
 		 * @return void
 		 */
 		public function render($tpl) {
+			ob_start();
 			include $this->_tplDir . $tpl;
+			$content = ob_get_contents();
+			ob_end_clean();
+			$this->response->append($content);
+		}
+		/**
+		 * Proxy function to \Tachyon\Response->send()
+		 * @param int $code The Response HTTP Code
+		 * @return void
+		 */
+		public function sendResponse($code = 200) {
+			$this->response->send($code);
 		}
 	}
 }

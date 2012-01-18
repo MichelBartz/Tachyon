@@ -1,11 +1,8 @@
 <?php
 /**
- * T A C H Y O N
+ * Application
  *
- * A Php Micro framework inspired by web.py {@link:http://webpy.org}
- *
- * For more informations: {@link:http://github.com/mikushi/tachyon}
- *
+ * @package Tachyon
  * @author Michel Bartz
  * @copyright Copyright (c) 2012 Michel Bartz
  * @license http://opensource.org/licenses/mit-license.php The MIT License
@@ -123,7 +120,11 @@ namespace Tachyon
 					$controller();
 				}
 			} else {
-				header("HTTP/1.0 404 Not Found");
+				if(substr(PHP_SAPI, 0,3) === "cgi") {
+					header("Status: 404 Not Found");
+				} else {
+					header("HTTP/1.0 404 Not Found");
+				}
 			}
 		}
 	}
