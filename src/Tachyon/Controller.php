@@ -124,5 +124,16 @@ namespace Tachyon
 		public function sendResponse($code = 200) {
 			$this->response->send($code);
 		}
+		/**
+		 * Weither or not the incoming request was made using HTTPS
+		 * @return bool
+		 */
+		public function isHTTPS() {
+			if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' 
+            || $_SERVER['SERVER_PORT'] == 443) ;
+				return true;
+			}
+			return false;
+		}
 	}
 }
