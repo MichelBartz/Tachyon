@@ -20,4 +20,13 @@ class ControllerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(true, $stub->getData("test"));
 		$this->assertEquals(null, $stub->getData("fail"));
 	}
+
+	public function testIsHTTPS() {
+		$_SERVER['HTTPS'] = "on";
+		$_SERVER['SERVER_PORT'] = 443;
+
+		$stub = $this->getMockForAbstractCLass("\\Tachyon\\Controller", array("./views"));
+
+		$this->assertEquals(true, $stub->isHTTPS());
+	}
 }
