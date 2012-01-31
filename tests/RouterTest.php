@@ -1,5 +1,5 @@
 <?php
-include "../src/Tachyon/Router.php";
+include_once "../src/Tachyon/Router.php";
 class RouterTest extends PHPUnit_Framework_TestCase
 {
 	/**

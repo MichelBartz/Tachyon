@@ -1,6 +1,6 @@
 <?php
-include "../src/Tachyon/Application.php";
-include "../src/Tachyon/Router.php";
+include_once "../src/Tachyon/Application.php";
+include_once "../src/Tachyon/Router.php";
 class ApplicationTest extends PHPUnit_Framework_TestCase
 {
 	/**

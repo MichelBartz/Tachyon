@@ -100,8 +100,13 @@ namespace Tachyon
 					include $this->_controllerDir . str_replace("\\","/", $controller) . ".php";
 
 					$ctrl = new $controller($this->_tplDir);
-					$ctrl->setParams($this->_router->getParams())
-						 ->$method();
+					$ctrl->setParams($this->_router->getParams());
+
+					if(method_exists($ctrl, $method)) {
+						$ctrl->$method();
+					} else {
+						$ctrl->sendResponse(405); //Method Not Allowed
+					}
 				} else {
 					call_user_func_array($controller, $this->_router->getParams());
 				}

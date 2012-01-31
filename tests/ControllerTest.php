@@ -1,6 +1,6 @@
 <?php
-include "../src/Tachyon/Response.php";
-include "../src/Tachyon/Controller.php";
+include_once "../src/Tachyon/Response.php";
+include_once "../src/Tachyon/Controller.php";
 class ControllerTest extends PHPUnit_Framework_TestCase
 {
 	public function testGetData() {

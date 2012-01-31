@@ -1,5 +1,5 @@
 <?php
-include "../src/Tachyon/Response.php";
+include_once "../src/Tachyon/Response.php";
 class ResponseTest extends PHPUnit_Framework_TestCase
 {
 	/**
