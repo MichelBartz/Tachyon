@@ -79,7 +79,7 @@ namespace Tachyon
 			return $this;
 		}
 		/**
-		 * Return User submitted data (Query String, Post Data, Cookies)
+		 * Return User submitted data (in URI)
 		 * @param String $entry The name of the data
 		 * @param mixed $default A default value for the data, used if data entry is non existent
 		 * @return mixed
@@ -87,11 +87,23 @@ namespace Tachyon
 		public function getData($entry, $default = null) {
 			if(isset($this->_params[$entry])) {
 				return $this->_params[$entry];
-			} elseif(isset($_POST[$entry])) {
-				return $_POST[$entry];
-			} elseif(isset($_GET[$entry])) {
+			}
+			return $default;
+		}
+		public function getGET($entry, $default = null) {
+			if(isset($_GET[$entry])) {
 				return $_GET[$entry];
-			} elseif(isset($_COOKIE[$entry])) {
+			}
+			return $default;
+		}
+		public function getPOST($entry, $default = null) {
+			if(isset($_POST[$entry])) {
+				return $_POST[$entry];
+			}
+			return $default;
+		}
+		public function getCOOKIE($entry, $default = null) {
+			if(isset($_COOKIE[$entry])) {
 				return $_COOKIE[$entry];
 			}
 			return $default;
