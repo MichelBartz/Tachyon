@@ -7,6 +7,6 @@ class Cacheable extends \Tachyon\Controller
 
 	public function get() {
 		$this->response->append("This is cacheable!");
-		$thos->sendResponse();
+		$this->sendResponse();
 	}
 }
