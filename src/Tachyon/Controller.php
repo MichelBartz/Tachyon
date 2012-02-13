@@ -90,18 +90,36 @@ namespace Tachyon
 			}
 			return $default;
 		}
+		/**
+		 * Return GET content variable if set
+		 * @param String The key name
+		 * @param mixed $default A default value to use when entry is non existent
+		 * @return mixed
+		 */
 		public function getGET($entry, $default = null) {
 			if(isset($_GET[$entry])) {
 				return $_GET[$entry];
 			}
 			return $default;
 		}
+		/**
+			* Return POST content variable if set
+		 * @param String The key name
+		 * @param mixed $default A default value to use when entry is non existent
+		 * @return mixed
+		 */
 		public function getPOST($entry, $default = null) {
 			if(isset($_POST[$entry])) {
 				return $_POST[$entry];
 			}
 			return $default;
 		}
+		/**
+		 * Return COOKIE content variable if set
+		 * @param String The key name
+		 * @param mixed $default A default value to use when entry is non existent
+		 * @return mixed
+		 */
 		public function getCOOKIE($entry, $default = null) {
 			if(isset($_COOKIE[$entry])) {
 				return $_COOKIE[$entry];
