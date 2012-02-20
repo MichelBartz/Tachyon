@@ -141,7 +141,9 @@ namespace Tachyon
 		 */
 		public function render($tpl) {
 			ob_start();
-			include $this->_tplDir . $tpl;
+			if(is_file($this->_tplDir . $tpl)){
+				include $this->_tplDir . $tpl;
+			}
 			$content = ob_get_contents();
 			ob_end_clean();
 			$this->response->append($content);
