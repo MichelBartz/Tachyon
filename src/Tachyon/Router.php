@@ -93,7 +93,7 @@ namespace Tachyon
 				if(preg_match_all("@^" . $regex . "$@", $this->_request, $values)) {
 					array_shift($values);
 					foreach($paramNames as $key=>$value) {
-						$this->_params[substr($value, 1)] = urldecode($values[0][$key]);
+						$this->_params[substr($value, 1)] = urldecode($values[$key][0]);
 					}
 
 					$this->_controller = $route;
