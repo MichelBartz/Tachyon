@@ -119,6 +119,7 @@ namespace Tachyon
 			if(isset($this->_routes['404'])) {
 				$controller = $this->_routes['404'];
 				if(!is_callable($controller)) {
+					include $this->_controllerDir . str_replace("\\","/", $controller) . ".php";
 					$ctrl = new $controller($this->_tplDir);
 					$ctrl->get();
 				} else {
