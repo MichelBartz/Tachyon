@@ -139,7 +139,8 @@ namespace Tachyon
 		 * @param String $tpl Path to the template. It is better to add the view folder to include paths
 		 * @return void
 		 */
-		public function render($tpl) {
+		public function render($tpl, $opt =array()) {
+			$this->_render_opt =$opt;			
 			ob_start();
 			include $this->_tplDir . $tpl;
 			$content = ob_get_contents();

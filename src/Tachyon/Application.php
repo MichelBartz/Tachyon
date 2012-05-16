@@ -104,6 +104,8 @@ namespace Tachyon
 
 					if(method_exists($ctrl, $method)) {
 						$ctrl->$method();
+					} elseif(method_exists($ctrl, 'get')) {
+						$ctrl->get();
 					} else {
 						$ctrl->sendResponse(405); //Method Not Allowed
 					}

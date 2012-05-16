@@ -1,0 +1,22 @@
+# Don't show directory listings for URLs which map to a directory.
+Options -Indexes
+# Follow symbolic links in this directory.
+Options +FollowSymLinks
+
+<IfModule mod_php5.c>
+  php_value magic_quotes_gpc                0
+  php_value register_globals                0
+  php_value session.auto_start              0
+  php_value mbstring.http_input             pass
+  php_value mbstring.http_output            pass
+  php_value mbstring.encoding_translation   0
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+	
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} !=/favicon.ico
+  RewriteRule ^(.*)$ index.php [L,QSA]
+</IfModule>
