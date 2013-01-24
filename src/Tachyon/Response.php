@@ -155,6 +155,13 @@ namespace Tachyon
 			$this->_headers['Content-Length'] = $this->_length;
 			return $this;
 		}
+        /**
+         * Returns the body
+         * @return String
+         */
+        public function getBody() {
+            return $this->_body;
+        }
 		/**
 		 * Returns the proper HTTP Message associated with a given HTTP Code
 		 * @param int $code The HTTP Code to lookup
