@@ -58,7 +58,7 @@ namespace Tachyon
 		 */
 		public function autoload($className) {
 			$pathToClass = str_replace("\\","/", $className);
-			require($pathToClass . ".php");
+			@require($pathToClass . ".php");
 		}
 		/**
 		 * Set the template directory
@@ -97,13 +97,15 @@ namespace Tachyon
 						throw new ApplicationException("No controller directory has been set.");
 					}
 					$method = $this->_router->getMethod();
-					include $this->_controllerDir . str_replace("\\","/", $controller) . ".php";
+					@include $this->_controllerDir . str_replace("\\","/", $controller) . ".php";
 
 					$ctrl = new $controller($this->_tplDir);
 					$ctrl->setParams($this->_router->getParams());
 
 					if(method_exists($ctrl, $method)) {
 						$ctrl->$method();
+					} elseif(method_exists($ctrl, 'get')) {
+						$ctrl->get();
 					} else {
 						$ctrl->sendResponse(405); //Method Not Allowed
 					}

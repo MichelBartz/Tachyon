@@ -79,6 +79,41 @@ namespace Tachyon
 			return $this->_params;
 		}
 		/**
+		 * Find the proper action depending of id value and GET vars
+		 * @return REST action
+		 */
+		public function setMethod() {
+			$method =strtolower($_SERVER['REQUEST_METHOD']);
+
+			if(isset($this->_params['id'])){
+				if($method =='post'){
+					// through POST
+					if(is_numeric($this->_params['id'])){
+						$method ='_update';
+					}elseif($this->_params['id'] =='new'){
+						$method ='_create';
+					}elseif($this->_params['id'] =='ajax'){
+						$method ='_ajax';
+					}
+				}else{
+					// through GET
+					if(isset($_GET['destroy'])){
+						$method ='_destroy';
+					}elseif(isset($_GET['edit'])){
+						$method ='_edit';
+					}elseif(is_numeric($this->_params['id'])){
+						$method ='_show';
+					}elseif($this->_params['id'] =='new'){
+						$method ='_new';
+					}elseif($this->_params['id'] =='all'){
+						$method ='_index';
+					}
+				}
+			}
+	
+			return $method;
+		}
+		/**
 		 *
 		 * I N T E R N A L   L O G I C
 		 */
@@ -97,7 +132,7 @@ namespace Tachyon
 					}
 
 					$this->_controller = $route;
-					$this->_method = strtolower($_SERVER['REQUEST_METHOD']);
+					$this->_method = $this->setMethod();
 					return true;
 				}
 			}

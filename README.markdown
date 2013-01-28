@@ -8,6 +8,7 @@ Tachyon provides just the necessary tools for creating websites in PHP :
 
 * Route handling RegEx style
 * Parameters in URI
+* Auto route to _index, _new, _create, _edit, _update, _show, _destroy or _ajax controller methods makes CRUD easy
 * Closure as Controller
 * Class as Controller
 * An optional Controller abstract
