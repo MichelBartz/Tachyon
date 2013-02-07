@@ -20,6 +20,7 @@ Tachyon provides just the necessary tools for creating websites in PHP :
 
 * PHP 5.3>=
 * PHPUnit (If you want to run the tests)
+* Apache 2+ or Nginx (example Nginx rewrite in examples/nginx.conf)
 
 ## "Hello World" (PHP >= 5.3)
 
