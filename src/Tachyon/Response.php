@@ -156,7 +156,7 @@ namespace Tachyon
 			return $this;
 		}
         /**
-         * Returns the body
+         * Returns the body generated so far
          * @return String
          */
         public function getBody() {
