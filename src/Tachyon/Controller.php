@@ -136,17 +136,22 @@ namespace Tachyon
 		}
 		/**
 		 * Renders the template and append the content to the HTTP Response
-		 * @param String $tpl Path to the template. It is better to add the view folder to include paths
+         * @param String $tpl Path to the template. It is better to add the view folder to include paths
+         * @param bool $returnOutput Append or return the output
 		 * @return void
 		 */
-		public function render($tpl) {
+		public function render($tpl, $returnOutput = false) {
 			ob_start();
 			if(is_file($this->_tplDir . $tpl)){
 				include $this->_tplDir . $tpl;
 			}
 			$content = ob_get_contents();
-			ob_end_clean();
-			$this->response->append($content);
+            ob_end_clean();
+            if(!$returnOutput) {
+                $this->response->append($content);
+            } else {
+                return $content;
+            }
 		}
 		/**
 		 * Proxy function to \Tachyon\Response->send()
