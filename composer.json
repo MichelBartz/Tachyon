@@ -2,7 +2,7 @@
     "name": "tachyon/tachyon",
     "type": "library",
     "description": "REST PHP Micro framework inspired by web.py",
-    "keywords": ["rest","micro","framework"],
+    "keywords": ["rest","micro","framework", "mvc"],
     "homepage": "https://github.com/Mikushi/Tachyon",
     "license": "MIT",
     "authors": [
