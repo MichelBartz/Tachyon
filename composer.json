@@ -1,0 +1,7 @@
+{
+    "name": "Tachyon",
+    "description": "REST PHP Micro framework inspired by web.py",
+    "require": {
+        "php": ">=5.3.0"
+    }
+}
