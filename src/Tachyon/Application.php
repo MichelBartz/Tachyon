@@ -36,10 +36,10 @@ namespace Tachyon
 {
 	class Application
 	{
-		private $_tplDir;
-		private $_controllerDir;
-		private $_routes = array();
-		private $_router;
+		protected $_tplDir;
+		protected $_controllerDir;
+		protected $_routes = array();
+		protected $_router;
 
 		/**
 		 * Constructor
