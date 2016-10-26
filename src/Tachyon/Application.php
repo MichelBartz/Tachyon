@@ -115,7 +115,7 @@ namespace Tachyon
 			}
 		}
 
-		private function _404() {
+		protected function _404() {
 			if(isset($this->_routes['404'])) {
 				$controller = $this->_routes['404'];
 				if(!is_callable($controller)) {
